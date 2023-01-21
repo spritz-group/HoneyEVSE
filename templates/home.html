@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>EV</title>
+</head>
+
+<body>
+    <canvas id="chart"></canvas>
+    <script>
+        function addData(chart, label, data) {
+            chart.data.labels.push(label);
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.push(data);
+            });
+            chart.update();
+        }
+
+        function removeData(chart) {
+            chart.data.labels.pop();
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data.pop();
+            });
+            chart.update();
+        }
+
+        var chart = new Chart('chart', {
+            type: "line",
+            data: {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'Erogated power',
+                        data: []
+                    }
+                ]
+            }
+        });
+
+        setInterval(() => {
+            fetch('./status')
+                .then(res => res.json())
+                .then(json => {
+                    addData(chart, json.Timestamp, json.Power);
+                })
+        }, 2000);
+    </script>
+</body>
+
+</html>
