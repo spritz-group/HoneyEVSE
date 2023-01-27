@@ -1,4 +1,6 @@
 import os
+import signal
+import sys
 from datetime import datetime
 
 import numpy as np
@@ -26,7 +28,13 @@ SITE = "caltech"
 
 SCH = algorithms.UncontrolledCharging()
 
-def simulate(ndevice=1):
+def signal_handler(sig, frame):
+    print("Blocking the simulations...")
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, signal_handler)
+
+def simulate(ndevices=1):
     """
     Given a number of device to simulate, the function simaltes their recharge in the acn portal.
     It return a dataframe containing the siumaltions of recharge.
