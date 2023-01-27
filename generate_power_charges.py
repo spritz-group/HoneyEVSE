@@ -6,6 +6,7 @@ import pandas as pd
 import pytz
 from dateutil.relativedelta import relativedelta
 from dotenv import load_dotenv
+from numpy import repeat
 
 from acnportal import acnsim, algorithms
 
@@ -44,11 +45,10 @@ def simulate(ndevice=1):
         sim = acnsim.Simulator(cn, SCH, events, TIMEZONE.localize(start), period=PERIOD)
         sim.run()
 
-        array_timestamp = acnsim.datetimes_array(sim)
-        # Pritn energy delivered
+        # Print energy delivered
         array_power = acnsim.aggregate_power(sim)
-        #cost = acnsim.energy_cost(sim, tariff=None)
-        array_id = np.repeat(f"id{i}", array_power.shape[0])
+        # Generate the id for the ev
+        array_id = repeat(f"id{i}", array_power.shape[0])
 
         _df_partial = pd.DataFrame({"id": array_id, "energy": array_power})
 
