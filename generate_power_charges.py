@@ -45,7 +45,7 @@ def simulate(ndevices=1):
     df_simulations = pd.DataFrame(columns=["id", "energy"])
     cn = acnsim.sites.caltech_acn(basic_evse=True, voltage=VOLTAGE)
 
-    for i in range(ndevice):
+    for i in range(ndevices):
 
         events = acnsim.acndata_events.generate_events(
             API_KEY, SITE, TIMEZONE.localize(start), TIMEZONE.localize(end), PERIOD, VOLTAGE, DEFAULT_BATTERY_POWER
