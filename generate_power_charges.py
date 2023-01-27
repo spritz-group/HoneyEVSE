@@ -69,4 +69,9 @@ def simulate(ndevices=1):
     df_simulations.to_csv("./static/simulations.csv", index=False)
     return df_simulations
 
-simulate(2)
+if __name__ == "__main__":
+    ndevices = int(sys.argv[1])
+    print("Starting simulations.\nThis can take a while...")
+    print("PRESS CTRL + C FOR STOP THE SIMULATION!")
+    simulate(ndevices)
+    print("Finish!")
