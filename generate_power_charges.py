@@ -33,7 +33,7 @@ def simulate(ndevice=1):
     start = datetime(2020, 3, 1)
     end = datetime(2020, 3, 30)
 
-    final_df = pd.DataFrame(columns=["Id", "Timestamp", "Power"])
+    df_simulations = pd.DataFrame(columns=["id", "energy"])
     cn = acnsim.sites.caltech_acn(basic_evse=True, voltage=VOLTAGE)
 
     for i in range(ndevice):
@@ -50,12 +50,9 @@ def simulate(ndevice=1):
         #cost = acnsim.energy_cost(sim, tariff=None)
         array_id = np.repeat(f"id{i}", array_power.shape[0])
 
-        _df = pd.DataFrame(columns=["Id", "Timestamp", "Power"])
-        _df["Id"] = array_id
-        _df["Timestamp"] = array_timestamp
-        _df["Power"] = array_power
+        _df_partial = pd.DataFrame({"id": array_id, "energy": array_power})
 
-        final_df = pd.concat([final_df, _df], ignore_index=True)
+        df_simulations = pd.concat([df_simulations, _df_partial], ignore_index=True)
 
         # new device, new month
         start += relativedelta(months=1)
