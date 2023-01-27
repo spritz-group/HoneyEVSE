@@ -12,6 +12,10 @@
 <body>
     <canvas id="chart"></canvas>
     <script>
+        function numberData(chart) {
+            return chart.data.datasets[0].data.length
+        }
+
         function addData(chart, label, data) {
             chart.data.labels.push(label);
             chart.data.datasets.forEach((dataset) => {
