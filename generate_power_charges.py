@@ -58,7 +58,7 @@ def simulate(ndevice=1):
         start += relativedelta(months=1)
         end += relativedelta(months=1)
 
-    final_df.to_csv("./static/simulations.csv")
-    return final_df
+    df_simulations.to_csv("./static/simulations.csv", index=False)
+    return df_simulations
 
 simulate(2)
