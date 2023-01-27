@@ -32,7 +32,11 @@
             chart.update();
         }
 
-        var chart = new Chart('chart', {
+        function removeAllData(chart) {
+            chart.data.datasets[0].data = []
+        }
+
+        let chart = new Chart('chart', {
             type: "line",
             data: {
                 labels: [],
