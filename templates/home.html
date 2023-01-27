@@ -56,7 +56,10 @@
                 .then(res => res.json())
                 .then(json => {
                     // If the id is different, it means that there is a new eletric veicol
-                    if (actualId != json.Id) { removeAllData(chart) }
+                    if (actualId == null || actualId != json.id) { 
+                        removeAllData(chart);
+                        actualId = json.id
+                    }
                     // Remove old datas from the graph
                     if (numberData(chart) >= 20) { removeData(chart) }
                     // Initialize date for print timestamp
