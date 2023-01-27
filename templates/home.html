@@ -49,11 +49,19 @@
             }
         });
 
+        let actualId = null;
+
         setInterval(() => {
             fetch('./status')
                 .then(res => res.json())
                 .then(json => {
-                    addData(chart, json.Timestamp, json.Power);
+                    // If the id is different, it means that there is a new eletric veicol
+                    if (actualId != json.Id) { removeAllData(chart) }
+                    // Remove old datas from the graph
+                    if (numberData(chart) >= 20) { removeData(chart) }
+                    // Initialize date for print timestamp
+                    let date = new Date();
+                    addData(chart, date.toLocaleTimeString(), json.Power);
                 })
         }, 2000);
     </script>
