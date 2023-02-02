@@ -36,6 +36,18 @@
             chart.data.datasets[0].data = []
         }
 
+        /**
+         * change randomly the color of the legend, lines and points in the chart
+        */
+        function randomRGBforChart(chart) {
+            let x = Math.floor(Math.random() * 256);
+            let y = Math.floor(Math.random() * 256);
+            let z = Math.floor(Math.random() * 256);
+            chart.data.datasets[0].borderColor = "rgb(" + x + "," + y + "," + z + ")";
+            chart.data.datasets[0].backgroundColor = "rgb(" + x + "," + y + "," + z + ")";
+            chart.data.datasets[0].pointBackgroundColor = "rgb(" + x + "," + y + "," + z + ")";
+        }
+
         let chart = new Chart('chart', {
             type: "line",
             data: {
@@ -56,9 +68,10 @@
                 .then(res => res.json())
                 .then(json => {
                     // If the id is different, it means that there is a new eletric veicol
-                    if (actualId == null || actualId != json.id) { 
+                    if (actualId == null || actualId != json.id) {
                         removeAllData(chart);
-                        actualId = json.id
+                        //randomRGBforChart(chart);
+                        actualId = json.id;
                     }
                     // Remove old datas from the graph
                     if (numberData(chart) >= 20) { removeData(chart) }
