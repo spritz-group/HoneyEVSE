@@ -17,7 +17,7 @@ API_KEY = os.getenv("API_KEY")
 
 TIMEZONE = pytz.timezone("America/Los_Angeles")
 
-PERIOD = 1 # minutes
+PERIOD = 5 # minutes
 
 VOLTAGE = 220  # volts
 
@@ -39,7 +39,7 @@ def simulate(ndevices=1):
     It return a dataframe containing the siumaltions of recharge.
     """
     start = datetime(2020, 3, 1)
-    end = datetime(2020, 3, 30)
+    end = datetime(2020, 3, 2)
 
     df_simulations = pd.DataFrame(columns=["id", "energy"])
     cn = acnsim.sites.caltech_acn(basic_evse=True, voltage=VOLTAGE)
@@ -62,8 +62,8 @@ def simulate(ndevices=1):
         df_simulations = pd.concat([df_simulations, _df_partial], ignore_index=True)
 
         # new device, new month
-        start += relativedelta(months=1)
-        end += relativedelta(months=1)
+        start += relativedelta(days=1)
+        end += relativedelta(days=1)
 
     df_simulations.to_csv("./static/simulations.csv", index=False)
     return df_simulations
