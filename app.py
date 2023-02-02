@@ -1,5 +1,5 @@
 import pandas as pd
-from flask import Flask, Response, render_template
+from flask import Flask, Response, render_template, request
 
 app = Flask(__name__)
 generator = pd.read_csv("static/simulations.csv").iterrows()
@@ -17,6 +17,18 @@ def status():
     # creating the payload to be returned
     payload = str(value.to_json())
     return Response(payload)
+
+# Route for handling the login page logic
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        app.logger.info('Trying to login with username: %s and password: %s',
+                        request.form['username'],
+                        request.form['password'])
+        error = 'Invalid Credentials. Please try again.'
+    return render_template('login.html', error=error)
+
 
 @app.route("/")
 def home():
