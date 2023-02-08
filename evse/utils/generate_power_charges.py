@@ -1,6 +1,4 @@
 import os
-import signal
-import sys
 from datetime import datetime
 
 import pandas as pd
@@ -27,13 +25,7 @@ SITE = "caltech"
 
 SCH = algorithms.UncontrolledCharging()
 
-def signal_handler(sig, frame):
-    print("Blocking the simulations...")
-    sys.exit(0)
-
-signal.signal(signal.SIGINT, signal_handler)
-
-def simulate(ndevices=1):
+def simulate(ndevices=1, file_path="../static/simulations.csv"):
     """
     Given a number of device to simulate, the function simaltes their recharge in the acn portal.
     It return a dataframe containing the siumaltions of recharge.
@@ -65,12 +57,4 @@ def simulate(ndevices=1):
         start += relativedelta(days=1)
         end += relativedelta(days=1)
 
-    df_simulations.to_csv("./static/simulations.csv", index=False)
-    return df_simulations
-
-if __name__ == "__main__":
-    ndevices = int(sys.argv[1])
-    print("Starting simulations.\nThis can take a while...")
-    print("PRESS CTRL + C FOR STOP THE SIMULATION!")
-    simulate(ndevices)
-    print("Finish!")
+    df_simulations.to_csv(file_path, index=False)
