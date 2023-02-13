@@ -1,5 +1,5 @@
-import pandas as pd
-from flask import Flask, Response, render_template, request
+import json
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 generator = pd.read_csv("static/simulations.csv").iterrows()
