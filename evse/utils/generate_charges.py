@@ -59,4 +59,8 @@ def simulate(ndevices=1, file_path="../static/charges.json"):
         start += relativedelta(days=1)
         end += relativedelta(days=1)
 
-    df_simulations.to_csv(file_path, index=False)
+    
+    with open(file_path, "w") as fout:
+        if not fout:
+            fout.write("")
+        json.dump(list_ev_charges, fout)
