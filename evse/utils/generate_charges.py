@@ -25,7 +25,7 @@ SITE = "caltech"
 
 SCH = algorithms.UncontrolledCharging()
 
-def simulate(ndevices=1, file_path="../static/simulations.csv"):
+def simulate(ndevices=1, file_path="../static/charges.json"):
     """
     Given a number of device to simulate, the function simaltes their recharge in the acn portal.
     It return a dataframe containing the siumaltions of recharge.
