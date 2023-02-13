@@ -23,8 +23,8 @@ def status():
 def login():
     error = None
     if request.method == 'POST':
-        app.logger.info('Trying to login with username: %s and password: %s',
-                        request.form['username'],
+        app.logger.info('Trying to login with email: %s and password: %s',
+                        request.form['email'],
                         request.form['password'])
         error = 'Invalid Credentials. Please try again.'
     return render_template('login.html', error=error)
@@ -33,6 +33,19 @@ def login():
 @app.route("/")
 def home():
     return render_template("home.html")
+
+#route that handles the signup page logic
+@app.route("/register", methods=['GET','POST'])
+def register():
+    error = None
+    if request.method == 'POST':
+        app.logger.info('Trying to register with name: %s, surname: %s, email: %s, password: %s, confirm_password: %s',
+        request.form['name'],
+        request.form['surname'],
+        request.form['email'],
+        request.form['password'],
+        request.form['confirm_password'])
+    return render_template("register.html", error = error)
 
 if __name__ == "__main__":
     app.run()
