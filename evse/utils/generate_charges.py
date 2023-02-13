@@ -49,11 +49,11 @@ def simulate(nsimulations=1, file_path="../static/charges.json"):
 
         for ev in dict_ev.values():
             id = "ev" + str(i)
-            instace_ev = EvCharge(id, ev.arrival, ev.departure, ev.requested_energy, ev.station_id)
-            actual_charging_rates = df_charging_rates.loc[instace_ev.arrival : instace_ev.departure, instace_ev.station_id]
-            for single_charging_rate in actual_charging_rates:
-                instace_ev.set_current_charging_rate(single_charging_rate)
-                list_ev_charges.append(instace_ev.to_dict())
+            ev_charge = EvCharge(id, ev.arrival, ev.departure, ev.requested_energy, ev.station_id)
+            valid_charging_rates = df_charging_rates.loc[ev_charge.arrival : ev_charge.departure, ev_charge.station_id]
+            for charging_rate in valid_charging_rates:
+                ev_charge.set_current_charging_rate(charging_rate)
+                list_ev_charges.append(ev_charge.to_dict())
 
         # new device, new month
         start += relativedelta(days=1)
