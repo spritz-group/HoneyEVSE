@@ -9,20 +9,19 @@ def generator_json(file_path=""):
 
 generator = generator_json("static/test.json")
 
-# Route for request a new chargeS
+# Route for request a new charges
 @app.route("/status")
 def status():
     # refering to the global variable "generator"
     global generator
-    value = next(generator, [None, None])[1]
-    # if the dataframe is terminated, the "value" becomes None
+    value = next(generator, None)
+    # if the list is terminated, the "value" becomes None
     if (value is None):
         # restarting the generator for the beginning
-        generator = pd.read_csv("static/simulations.csv").iterrows()
-        value = next(generator, [None, None])[1]
-    # creating the payload to be returned
-    payload = str(value.to_json())
-    return Response(payload)
+        generator = generator_json("/test.json")
+        value = next(generator, None)
+    # return the payloaded value
+    return value
 
 # Route for handling the login page logic
 @app.route('/login', methods=['GET', 'POST'])
