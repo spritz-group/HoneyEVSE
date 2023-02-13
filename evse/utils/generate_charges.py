@@ -44,14 +44,16 @@ def simulate(ndevices=1, file_path="../static/charges.json"):
         sim = acnsim.Simulator(cn, SCH, events, TIMEZONE.localize(start), period=PERIOD)
         sim.run()
 
-        # Print energy delivered
-        array_power = acnsim.aggregate_power(sim)
-        # Generate the id for the ev
-        array_id = repeat(f"id{i}", array_power.shape[0])
+        df_charging_rates = sim.charging_rates_as_df()
+        dict_ev = sim.ev_history
 
-        _df_partial = pd.DataFrame({"id": array_id, "energy": array_power})
-
-        df_simulations = pd.concat([df_simulations, _df_partial], ignore_index=True)
+        for ev in dict_ev.values():
+            id = "ev" + str(i)
+            instace_ev = EvCharge(id, ev.arrival, ev.departure, ev.requested_energy, ev.station_id)
+            actual_charging_rates = df_charging_rates.loc[instace_ev.arrival : instace_ev.departure, instace_ev.station_id]
+            for single_charging_rate in actual_charging_rates:
+                instace_ev.set_current_charging_rate(single_charging_rate)
+                list_ev_charges.append(instace_ev.to_dict())
 
         # new device, new month
         start += relativedelta(days=1)
