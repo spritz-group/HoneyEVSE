@@ -33,7 +33,7 @@ def simulate(ndevices=1, file_path="../static/charges.json"):
     start = datetime(2020, 3, 1)
     end = datetime(2020, 3, 2)
 
-    df_simulations = pd.DataFrame(columns=["id", "energy"])
+    list_ev_charges = []
     cn = acnsim.sites.caltech_acn(basic_evse=True, voltage=VOLTAGE)
 
     for i in range(ndevices):
