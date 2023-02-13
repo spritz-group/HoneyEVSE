@@ -10,7 +10,7 @@ from pathlib import Path
 
 from utils.generate_charges import simulate
 
-NSIMULATIONS = 5
+NSIMULATIONS = 1
 
 PATH = Path.cwd() / "static/"
 
