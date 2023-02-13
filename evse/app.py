@@ -2,8 +2,14 @@ import json
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
-generator = pd.read_csv("static/simulations.csv").iterrows()
 
+def generator_json(file_path=""):
+    for obj in json.load(open(file_path)):
+        yield obj
+
+generator = generator_json("static/test.json")
+
+# Route for request a new chargeS
 @app.route("/status")
 def status():
     # refering to the global variable "generator"
