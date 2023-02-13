@@ -25,7 +25,7 @@ SITE = "caltech"
 
 SCH = algorithms.UncontrolledCharging()
 
-def simulate(ndevices=1, file_path="../static/charges.json"):
+def simulate(nsimulations=1, file_path="../static/charges.json"):
     """
     Given a number of device to simulate, the function simaltes their recharge in the acn portal.
     It return a dataframe containing the siumaltions of recharge.
@@ -36,7 +36,7 @@ def simulate(ndevices=1, file_path="../static/charges.json"):
     list_ev_charges = []
     cn = acnsim.sites.caltech_acn(basic_evse=True, voltage=VOLTAGE)
 
-    for i in range(ndevices):
+    for i in range(nsimulations):
 
         events = acnsim.acndata_events.generate_events(
             API_KEY, SITE, TIMEZONE.localize(start), TIMEZONE.localize(end), PERIOD, VOLTAGE, DEFAULT_BATTERY_POWER

@@ -10,7 +10,7 @@ from pathlib import Path
 
 from utils.generate_charges import simulate
 
-NDEVICES = 10
+NSIMULATIONS = 5
 
 PATH = Path("./static/")
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
     if not FILE_PATH.exists():
         print("Starting simulations.\nThis can take a while...")
         print("PRESS CTRL + C FOR STOP THE SIMULATION!")
-        simulate(NDEVICES, FILE_PATH)
+        simulate(NSIMULATIONS, FILE_PATH)
         print("Generate simulations!")
     else:
         print("Already generate simulations!")
