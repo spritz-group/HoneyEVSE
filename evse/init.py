@@ -12,7 +12,7 @@ from utils.generate_charges import simulate
 
 NSIMULATIONS = 5
 
-PATH = Path("./static/")
+PATH = Path.cwd() / "static/"
 
 def signal_handler(sig, frame):
     print("Blocking the simulations...")
