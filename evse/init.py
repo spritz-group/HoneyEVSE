@@ -8,7 +8,7 @@ import signal
 import sys
 from pathlib import Path
 
-from utils.generate_power_charges import simulate
+from utils.generate_charges import simulate
 
 NDEVICES = 10
 
@@ -21,7 +21,7 @@ def signal_handler(sig, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 if __name__ == "__main__":
-    FILE_PATH = PATH / "simulations.csv"
+    FILE_PATH = PATH / "charges.json"
     if not FILE_PATH.exists():
         print("Starting simulations.\nThis can take a while...")
         print("PRESS CTRL + C FOR STOP THE SIMULATION!")
