@@ -2,6 +2,7 @@ from itertools import count
 import json
 import os
 from datetime import datetime
+from pathlib import Path
 
 import pytz
 from acnportal import acnsim, algorithms
@@ -51,7 +52,7 @@ def simulate(nsimulations=1, file_path=Path()):
         dict_ev = sim.ev_history
 
         for ev in dict_ev.values():
-            id = "ev" + str(i)
+            id = "ev" + str(next(COUNTER))
             ev_charge = EvCharge(id, ev.arrival, ev.departure, ev.requested_energy, ev.station_id)
             valid_charging_rates = df_charging_rates.loc[ev_charge.arrival : ev_charge.departure, ev_charge.station_id]
             for charging_rate in valid_charging_rates:
@@ -63,7 +64,5 @@ def simulate(nsimulations=1, file_path=Path()):
         end += relativedelta(days=1)
 
     
-    with open(file_path, "w") as fout:
-        if not fout:
-            fout.write("")
-        json.dump(list_ev_charges, fout)
+    with file_path.open("w") as fp: 
+        json.dump(list_ev_charges, fp)
