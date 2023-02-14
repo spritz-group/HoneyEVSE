@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    background: rgb(0, 146, 121);
+    background: linear-gradient(45deg, rgba(0, 146, 121, 1) 30%, rgba(13, 81, 90, 1) 100%);
+}
+
+/*--- HOME SECTION  ---*/
+
+#data {
+    width: 50%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+h3,
+p {
+    display: inline;
+}
+
+/*---LOGIN & SIGN UP SECTION---*/
+
+#login,
+#singup {
+    height: 100vh;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.container {
+    width: 50%;
+}
+
+.container,
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container>h1 {
+    color: #fff;
+    margin: 20px;
+}
+
+.form>input {
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 16px 32px;
+    margin-bottom: 15%;
+}
+
+.form>input[type=submit] {
+    background-color: #fff;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    padding: 16px 32px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #fff;
+    opacity: 1;
+    /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #fff;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #fff;
+}
