@@ -1,29 +1,28 @@
 <html>
-  <head>
-    <title>Flask Intro - login page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .container, .form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    </style>
-  </head>
-  <body>
+
+<head>
+  <title>EVSE - Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+  <div id="login">
     <div class="container">
       <h1>Please login</h1>
-      <br>
-      <form class ="form" action="" method="post">
-        <input type="text" placeholder="Email" name="email" value="{{
-          request.form.email }}">
-         <input type="password" placeholder="Password" name="password" value="{{
-          request.form.password }}">
+      <form class="form" action="" method="post">
+        <input type="email" placeholder="Email" name="email" value="{{
+            request.form.email }}">
+        <input type="password" placeholder="Password" name="password" value="{{
+            request.form.password }}">
         <input type="submit" value="Login">
       </form>
       {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
+      <p class="error"><strong>Error:</strong> {{ error }}</p>
       {% endif %}
     </div>
-  </body>
+    <img src="static/img/evse.png" />
+  </div>
+</body>
+
 </html>
