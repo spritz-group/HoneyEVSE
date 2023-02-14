@@ -3,7 +3,7 @@
 # VARIABLES {{{1
 
 EVSE-PATH = ./evse
-API-KEY = YOUR_API_KEY
+API-KEY = "YOUR API KEY"
 
 PYTHON3 = python3
 
