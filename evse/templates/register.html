@@ -1,35 +1,35 @@
 <html>
-  <head>
-    <title>Flask Intro - register page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .container, .form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    </style>
-  </head>
-  <body>
+
+<head>
+  <title>EVSE - Sign Up</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+  <div id="singup">
     <div class="container">
       <h1>Sign up</h1>
       <br>
-      <form class ="form" action="" method="post">
-        <input type="text" placeholder="name" name="name" value="{{
-          request.form.name }}">
-        <input type="surname" placeholder="surname" name="surname" value="{{
-          request.form.surname }}">
-        <input type="email" placeholder="email" name="email" value="{{
-          request.form.email }}">
-        <input type="password" placeholder="password" name="password" value="{{
-          request.form.password }}">
-        <input type="confirm_password" placeholder="confirm_password" name="confirm_password" value="{{
-          request.form.confirm_password }}">
+      <form class="form" action="" method="post">
+        <input type="text" placeholder="Name" name="name" value="{{
+            request.form.name }}">
+        <input type="surname" placeholder="Surname" name="surname" value="{{
+            request.form.surname }}">
+        <input type="email" placeholder="Email" name="email" value="{{
+            request.form.email }}">
+        <input type="password" placeholder="Password" name="password" value="{{
+            request.form.password }}">
+        <input type="password" placeholder="Confirm Password" name="confirm_password" value="{{
+            request.form.confirm_password }}">
         <input type="submit" value="Register">
       </form>
       {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
+      <p class="error"><strong>Error:</strong> {{ error }}</p>
       {% endif %}
     </div>
-  </body>
+    <img src="static/img/evse.png" />
+  </div>
+</body>
+
 </html>
