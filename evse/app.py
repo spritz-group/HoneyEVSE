@@ -34,12 +34,7 @@ def login():
         error = 'Invalid Credentials. Please try again.'
     return render_template('login.html', error=error)
 
-
-@app.route("/")
-def home():
-    return render_template("home.html")
-
-#route that handles the signup page logic
+# Route that handles the signup page logic
 @app.route("/register", methods=['GET','POST'])
 def register():
     error = None
@@ -51,6 +46,10 @@ def register():
         request.form['password'],
         request.form['confirm_password'])
     return render_template("register.html", error = error)
+
+@app.route("/")
+def home():
+    return render_template("home.html")
 
 if __name__ == "__main__":
     app.run()
