@@ -10,6 +10,8 @@ def generator_json(file_path=""):
 
 generator = generator_json("static/charges.json")
 
+app = Flask(__name__)
+
 # Route for request a new charges
 @app.route("/status")
 def status():
@@ -46,6 +48,7 @@ def register():
         request.form['email'],
         request.form['password'],
         request.form['confirm_password'])
+        return redirect("/")
     return render_template("register.html", error = error)
 
 @app.route("/")
