@@ -1,7 +1,8 @@
 import json
-from flask import Flask, render_template, request
+import logging
+from flask import Flask, redirect, render_template, request
 
-app = Flask(__name__)
+logging.basicConfig(filename='record.log', level=logging.INFO)
 
 def generator_json(file_path=""):
     for obj in json.load(open(file_path)):
