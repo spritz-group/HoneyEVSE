@@ -124,6 +124,11 @@ class EvCharge():
         Defined as the ratio of remaining demand and requested energy. """
         return 100 - self.remaining_demand / self.requested_energy
 
+    @property
+    def cost(self):
+        """ Return the cost of recharge so far for this charging session. (float)"""
+        return 0.60 * self.energy_delivered
+
     def _update_energy_delivered(self):
         self._energy_delivered += (self.current_charging_rate * 220) / 1000 * (5 / 60)
         
@@ -134,7 +139,8 @@ class EvCharge():
             "departure": self.departure,
             "current_charge": self.current_charging_rate,
             "energy_delivered": self.energy_delivered,
-            "percent_complete": self.percent_complete
+            "percent_complete": self.percent_complete,
+            "cost": self.cost
         }
         return json.dumps(_d)
 
@@ -145,5 +151,6 @@ class EvCharge():
             "departure": self.departure,
             "current_charge": self.current_charging_rate,
             "energy_delivered": self.energy_delivered,
-            "percent_complete": self.percent_complete
+            "percent_complete": self.percent_complete,
+            "cost": self.cost
         }
