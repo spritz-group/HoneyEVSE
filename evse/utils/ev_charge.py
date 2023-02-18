@@ -17,6 +17,7 @@ class EvCharge():
         departure,
         requested_energy,
         station_id,
+        discharge,
         estimated_departure=None,
     ):
         # User Defined Parameters
@@ -24,6 +25,7 @@ class EvCharge():
         self._arrival = arrival
         self._departure = departure
         self._station_id = station_id
+        self._discharge = discharge
 
         # Estimate of session parameters
         self._requested_energy = requested_energy
@@ -90,6 +92,11 @@ class EvCharge():
         return self._station_id
 
     @property
+    def discharge(self):
+        """ Return a factor od discharge in order to have a better representation of precent charging. """
+        return self._discharge
+
+    @property
     def energy_delivered(self):
         """ Return the total energy delivered so far in this charging session. (float) """
         return self._energy_delivered
@@ -130,7 +137,7 @@ class EvCharge():
         return 0.60 * self.energy_delivered
 
     def _update_energy_delivered(self):
-        self._energy_delivered += (self.current_charging_rate * 220) / 1000 * (5 / 60)
+        self._energy_delivered += (self.current_charging_rate * 220) / 1000 * (1 / 60)
         
     def to_json(self) -> str:
         _d = {
