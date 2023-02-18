@@ -3,6 +3,7 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
+from random import randrange
 
 import pytz
 from acnportal import acnsim, algorithms
@@ -17,7 +18,7 @@ API_KEY = os.getenv("API_KEY")
 
 TIMEZONE = pytz.timezone("America/Los_Angeles")
 
-PERIOD = 5 # minutes
+PERIOD = 1 # minutes
 
 VOLTAGE = 220  # volts
 
@@ -52,17 +53,27 @@ def simulate(nsimulations=1, file_path=Path()):
         dict_ev = sim.ev_history
 
         for ev in dict_ev.values():
+            # Generate a special id for the ev
             id = "ev" + str(next(COUNTER))
-            ev_charge = EvCharge(id, ev.arrival, ev.departure, ev.requested_energy, ev.station_id)
-            valid_charging_rates = df_charging_rates.loc[ev_charge.arrival : ev_charge.departure, ev_charge.station_id]
-            for charging_rate in valid_charging_rates:
+            # Create a mask for the valid charges in the df
+            mask_valid_charges = df_charging_rates[ev.station_id] != 0
+            # List the indexes for acessing the first and last value
+            list_indexes = df_charging_rates.index[mask_valid_charges].tolist()
+            # Crete the fist and last elemtn (took one above and one beyond for have a better range)
+            start_charge, end_charge = list_indexes[0] - 1, list_indexes[-1] + 1
+            # Generate a random value for the discharge percentage
+            discharge_value = randrange(40, 80)
+            ev_charge = EvCharge(id, start_charge, end_charge, ev.requested_energy, ev.station_id, discharge_value)
+            # Iterate to each charges rate for each ev
+            for charging_rate in df_charging_rates.loc[start_charge : end_charge, ev.station_id]:
+                # Set the current charge rate and save the internal parameter
                 ev_charge.set_current_charging_rate(charging_rate)
                 list_ev_charges.append(ev_charge.to_dict())
 
-        # new device, new month
+        # each simulation requires a new day
         start += relativedelta(days=1)
         end += relativedelta(days=1)
 
-    
+    # Save the snapshots of charges in a json file    
     with file_path.open("w") as fp: 
         json.dump(list_ev_charges, fp)
