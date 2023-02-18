@@ -6,16 +6,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>EV</title>
+    <title>EVSE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
-    <canvas id="chart"></canvas>
+    <div id="home">
+        <div id="data">
+            <h3>Vehicle ID: </h3>
+            <p id="id">--</p>
+            <h3>Estimated Departure Time:</h3>
+            <p id="departure">--</p>
+            <h3>Current Charge:</h3>
+            <p id="current_charge">--</p>
+            <h3>Energy Delivered:</h3>
+            <p id="energy_delivered">--</p>
+            <h3>Precent Complete:</h3>
+            <p id="percent_complete">--</p>
+            <h3>Total Amount:</h3>
+            <p id="cost">--</p>
+        </div>
+        <div id="chart-container">
+            <canvas id="chart"></canvas>
+        </div>
+    </div>
     <script>
-        function numberData(chart) {
-            return chart.data.datasets[0].data.length
-        }
-
         function addData(chart, label, data) {
             chart.data.labels.push(label);
             chart.data.datasets.forEach((dataset) => {
@@ -24,42 +39,31 @@
             chart.update();
         }
 
-        function removeData(chart) {
-            chart.data.labels.shift();
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.shift();
-            });
-            chart.update();
-        }
-
-        function removeAllData(chart) {
-            chart.data.datasets[0].data = []
-        }
-
-        /**
-         * change randomly the color of the legend, lines and points in the chart
-        */
-        function randomRGBforChart(chart) {
-            let x = Math.floor(Math.random() * 256);
-            let y = Math.floor(Math.random() * 256);
-            let z = Math.floor(Math.random() * 256);
-            chart.data.datasets[0].borderColor = "rgb(" + x + "," + y + "," + z + ")";
-            chart.data.datasets[0].backgroundColor = "rgb(" + x + "," + y + "," + z + ")";
-            chart.data.datasets[0].pointBackgroundColor = "rgb(" + x + "," + y + "," + z + ")";
-        }
-
-        let chart = new Chart('chart', {
-            type: "line",
-            data: {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'Erogated power',
-                        data: []
-                    }
-                ]
+        function newChart() {
+            config = {
+                type: "line",
+                data: {
+                    labels: [0],
+                    datasets: [
+                        {
+                            label: 'Current Charge',
+                            data: [new Date().toLocaleTimeString()]
+                        }
+                    ]
+                }
             }
-        });
+
+            return new Chart('chart', config);
+        }
+
+        let chart = newChart()
+
+        let id = document.getElementById("id");
+        let departure = document.getElementById("departure");
+        let current_charge = document.getElementById("current_charge");
+        let energy_delivered = document.getElementById("energy_delivered");
+        let percent_complete = document.getElementById("percent_complete");
+        let cost = document.getElementById("cost");
 
         let actualId = null;
 
@@ -67,17 +71,26 @@
             fetch('./status')
                 .then(res => res.json())
                 .then(json => {
+                    // Update values each second
+                    id.innerHTML = json.id
+                    departure.innerHTML = json.departure
+                    current_charge.innerHTML = json.current_charge
+                    energy_delivered.innerHTML = json.energy_delivered
+                    percent_complete.innerHTML = json.percent_complete
+                    cost.innerHTML = json.cost
+
                     // If the id is different, it means that there is a new eletric veicol
                     if (actualId == null || actualId != json.id) {
-                        removeAllData(chart);
-                        //randomRGBforChart(chart);
+                        current_charge.innerHTML = 0
+                        addData(chart, new Date().toLocaleTimeString(), 0);
+                        chart.destroy();
+                        chart = newChart();
                         actualId = json.id;
                     }
-                    // Remove old datas from the graph
-                    if (numberData(chart) >= 20) { removeData(chart) }
                     // Initialize date for print timestamp
                     let date = new Date();
-                    addData(chart, date.toLocaleTimeString(), json.energy);
+                    addData(chart, date.toLocaleTimeString(), json.current_charge);
+
                 })
         }, 1000);
     </script>

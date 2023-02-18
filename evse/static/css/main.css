@@ -22,10 +22,16 @@ p {
     display: inline;
 }
 
+#chart-container {
+    position: relative;
+    width: 50%;
+}
+
 /*---LOGIN & SIGN UP SECTION---*/
 
 #login,
-#singup {
+#singup,
+#home {
     height: 100vh;
     width: auto;
     display: flex;
