@@ -20,5 +20,5 @@ evse:
 # CLEAN {{{1
 
 clean:
-
+	cd $(EVSE-PATH); rm record.log
 # }}}
