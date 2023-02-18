@@ -2,7 +2,7 @@ import json
 import logging
 from flask import Flask, redirect, render_template, request
 
-logging.basicConfig(filename='record.log', level=logging.INFO)
+logging.basicConfig(filename='record.log', level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s : %(message)s')
 
 def generator_json(file_path=""):
     for obj in json.load(open(file_path)):
@@ -31,9 +31,10 @@ def status():
 def login():
     error = None
     if request.method == 'POST':
-        app.logger.info('Trying to login with email: %s and password: %s',
+        app.logger.info('Trying to login with email: %s and password: %s from %s',
                         request.form['email'],
-                        request.form['password'])
+                        request.form['password'],
+                        request.remote_addr)
         error = 'Invalid Credentials. Please try again.'
     return render_template('login.html', error=error)
 
@@ -42,12 +43,13 @@ def login():
 def register():
     error = None
     if request.method == 'POST':
-        app.logger.info('Trying to register with name: %s, surname: %s, email: %s, password: %s, confirm_password: %s',
+        app.logger.info('Trying to register with name: %s, surname: %s, email: %s, password: %s, confirm_password: %s from %s',
         request.form['name'],
         request.form['surname'],
         request.form['email'],
         request.form['password'],
-        request.form['confirm_password'])
+        request.form['confirm_password'],
+        request.remote_addr)
         return redirect("/")
     return render_template("register.html", error = error)
 
