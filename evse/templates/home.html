@@ -57,18 +57,11 @@
         </div>
     </div>
     <script>
+        /* Simple function to calculate the minutes from a instant of time to another one*/
         function calculateDeparture(arrival, departure) {
             let interval = departure - arrival;
             let dateTime = new Date().getTime();
             return new Date(dateTime + interval * 60000).toLocaleTimeString();
-        }
-
-        function addData(chart, label, data) {
-            chart.data.labels.push(label);
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data.push(data);
-            });
-            chart.update();
         }
 
         let departure = document.getElementById("departure");
