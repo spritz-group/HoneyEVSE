@@ -30,6 +30,9 @@ sudo apt install -y libevent-dev libdumbnet-dev libpcap-dev libpcre3-dev libedit
 make
 sudo make install
 
+# Install packages for python
+pip install -r requirements.txt
+
 # create log and make it modifiable
 touch honeyd.log
 sudo chmod 777 honeyd.log
