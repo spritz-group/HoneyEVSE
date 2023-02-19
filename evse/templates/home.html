@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EVSE</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+
+<body>
+    <div id="banner">
+        <h1>EVSE</h1>
+    </div>
+    <div id="home">
+        <h1 id="title">Dashboard</h1>
+        <div id="data">
+            <div class="label">
+                <h2>Energy Delivered:</h2>
+                <h2>
+                    <p id="energy_delivered">--</p> kwH
+                </h2>
+            </div>
+            <div class="label">
+                <h2>Precent Complete:</h2>
+                <h2>
+                    <p id="percent_complete">--</p> %
+                </h2>
+            </div>
+            <div class="label">
+                <h2>Status: </h2>
+                <h2>
+                    <p id="status">--</p>
+                </h2>
+            </div>
+            <nav>
+                <div>
+                    <h3>Estimated Departure Time:</h3>
+                    <h2>
+                        <p id="departure">--</p>
+                    </h2>
+                </div>
+                <div>
+                    <h3>Current Charge:</h3>
+                    <h2>
+                        <p id="current_charge">--</p> &#913;
+                    </h2>
+                </div>
+                <div>
+                    <h3>Total Cost:</h3>
+                    <h2>
+                        <p id="cost">--</p> &euro;
+                    </h2>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <script>
+        /* Simple function to calculate the minutes from a instant of time to another one*/
+        function calculateDeparture(arrival, departure) {
+            let interval = departure - arrival;
+            let dateTime = new Date().getTime();
+            return new Date(dateTime + interval * 60000).toLocaleTimeString();
+        }
+
+        let departure = document.getElementById("departure");
+        let current_charge = document.getElementById("current_charge");
+        let energy_delivered = document.getElementById("energy_delivered");
+        let percent_complete = document.getElementById("percent_complete");
+        let status = document.getElementById("status");
+        let cost = document.getElementById("cost");
+
+        let actualId = null;
+
+        setInterval(() => {
+            fetch('./status')
+                .then(res => res.json())
+                .then(json => {
+                    // Update values each second
+                    status.innerHTML = json.current_charge == 0 ? "Disconnect" : "On Charge";
+                    current_charge.innerHTML = json.current_charge.toFixed(2);
+                    energy_delivered.innerHTML = json.energy_delivered.toFixed(2);
+                    percent_complete.innerHTML = json.percent_complete.toFixed(2);
+                    cost.innerHTML = json.cost.toFixed(2);
+
+                    // If the id is different, it means that there is a new eletric veichle
+                    if (actualId == null || actualId != json.id) {
+                        departure.innerHTML = calculateDeparture(json.arrival, json.departure);
+                        status.innerHTML = "Connect"
+                        actualId = json.id;
+                    }
+                })
+        }, 1000);
+    </script>
+</body>
+
+</html>

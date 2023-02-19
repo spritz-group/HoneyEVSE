@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+
+}
+
+body {
+    height: 100vh;
+    background: rgb(0, 146, 121);
+    background: linear-gradient(45deg, rgba(0, 146, 121, 1) 30%, rgba(13, 81, 90, 1) 100%);
+}
+
+.label {
+    margin-bottom: 20px;
+}
+
+.label > h2 {
+    display: inline;
+}
+
+#banner {
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    padding: 15px;
+}
+
+/*--- HOME SECTION  ---*/
+
+#home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#title {
+    margin: 40px;
+}
+
+#data {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+nav {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+h3,
+p {
+    display: inline;
+}
+
+/*---ADMIN SECTION---*/
+
+#admin > #data {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#admin > #data > div {
+    margin: 20px 0px;
+}
+
+#admin > #chart-container {
+    position: relative;
+    width: 50%;
+}
+
+/*---LOGIN & SIGN UP SECTION---*/
+
+#login,
+#singup,
+#admin {
+    height: 100vh;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.container {
+    width: 50%;
+}
+
+.container,
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.container>h1 {
+    color: #fff;
+    margin: 20px;
+}
+
+.form>input {
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 16px 32px;
+    margin-bottom: 15%;
+}
+
+.form>input[type=submit] {
+    background-color: #fff;
+    border: none;
+    border-radius: 20px;
+    color: #000;
+    padding: 16px 32px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #fff;
+    opacity: 1;
+    /* Firefox */
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #fff;
+}
+
+::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #fff;
+}

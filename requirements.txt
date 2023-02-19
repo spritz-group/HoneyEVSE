@@ -1,0 +1,7 @@
+acnportal
+autopep8
+python-dotenv
+Flask
+pathlib
+pandas
+numpy
