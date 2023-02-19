@@ -6,37 +6,58 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>EVSE</title>
+    <title>EVSE - HMI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 </head>
 
 <body>
+    <div id="banner">
+        <h1>EVSE - HMI</h1>
+    </div>
     <div id="admin">
         <div id="data">
-            <h3>Vehicle ID: </h3>
-            <h3>
-                <p id="id">--</p>
-            </h3>
-            <h3>Estimated Departure Time</h3>
-            <h3>
-                <p id="departure">--</p>
-            </h3>
-            <h3>Current Charge:</h3>
-            <h3>
-                <p id="current_charge">--</p> &#913;
-            </h3>
-            <h3>Energy Delivered:</h3>
-            <h3>
-                <p id="energy_delivered">--</p> kwH
-            </h3>
-            <h3>Precent Complete:</h3>
-            <h3>
-                <p id="percent_complete">--</p> %
-            </h3>
-            <h3>Total Amount:</h3>
-            <h3>
-                <p id="cost">--</p> &euro;
-            </h3>
+            <div>
+                <h3>Vehicle ID: </h3>
+                <h3>
+                    <p id="id">--</p>
+                </h3>
+            </div>
+            <div>
+                <h3>Arrived:</h3>
+                <h3>
+                    <p id="arrival">--</p>
+                </h3>
+            </div>
+            <div>
+                <h3>Estimated Departure Time</h3>
+                <h3>
+                    <p id="departure">--</p>
+                </h3>
+            </div>
+            <div>
+                <h3>Current Charge:</h3>
+                <h3>
+                    <p id="current_charge">--</p> &#913;
+                </h3>
+            </div>
+            <div>
+                <h3>Energy Delivered:</h3>
+                <h3>
+                    <p id="energy_delivered">--</p> kwH
+                </h3>
+            </div>
+            <div>
+                <h3>Precent Complete:</h3>
+                <h3>
+                    <p id="percent_complete">--</p> %
+                </h3>
+            </div>
+            <div>
+                <h3>Total Cost:</h3>
+                <h3>
+                    <p id="cost">--</p> &euro;
+                </h3>
+            </div>
         </div>
         <div id="chart-container">
             <canvas id="chart"></canvas>
@@ -77,6 +98,7 @@
         let chart = newChart()
 
         let id = document.getElementById("id");
+        let arrival = document.getElementById("arrival")
         let departure = document.getElementById("departure");
         let current_charge = document.getElementById("current_charge");
         let energy_delivered = document.getElementById("energy_delivered");
@@ -98,6 +120,7 @@
 
                     // If the id is different, it means that there is a new eletric veicol
                     if (actualId == null || actualId != json.id) {
+                        arrival.innerHTML = new Date().toLocaleTimeString();
                         departure.innerHTML = calculateDeparture(json.arrival, json.departure);
                         chart.destroy();
                         chart = newChart();
