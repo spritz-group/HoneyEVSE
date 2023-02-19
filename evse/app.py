@@ -5,6 +5,7 @@ from flask import Flask, redirect, render_template, request
 logging.basicConfig(filename='record.log', level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s : %(message)s')
 
 def generator_json(file_path=""):
+    """ The function create a generator from a json file in order to handle sequential route calls. """
     for obj in json.load(open(file_path)):
         yield obj
 
@@ -53,10 +54,12 @@ def register():
         return redirect("/")
     return render_template("register.html", error = error)
 
+# Route for the HMI
 @app.route("/admin")
 def admin():
     return render_template("admin.html")
 
+# Route for the user web interface
 @app.route("/")
 def home():
     return render_template("home.html")
