@@ -15,13 +15,10 @@ sleep 3
 sudo apt update
 
 # Installing necessary packages
-sudo apt install -y git python3 python3-pip curl libsqlite3-dev openvswitch-testcontroller net-tools gnome-terminal
+sudo apt install -y git python3 python3-pip libjpeg-dev zlib1g-dev curl libsqlite3-dev openvswitch-testcontroller net-tools gnome-terminal
 
 # Install farpd
 sudo apt install -y farpd
-
-# CPPPO Correct Version 4.3.4
-sudo pip2 install cpppo==4.3.4
 
 # Installing Honeyd - just a copy and paste of the guide
 cd ~
