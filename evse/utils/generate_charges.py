@@ -59,7 +59,7 @@ def simulate(nsimulations=1, file_path=Path()):
             mask_valid_charges = df_charging_rates[ev.station_id] != 0
             # List the indexes for acessing the first and last value
             list_indexes = df_charging_rates.index[mask_valid_charges].tolist()
-            # Crete the fist and last elemtn (took one above and one beyond for have a better range)
+            # Create the fist and last element (took one above and one beyond for have a better range)
             start_charge, end_charge = list_indexes[0] - 1, list_indexes[-1] + 1
             # Generate a random value for the discharge percentage
             discharge_value = randrange(40, 80)
