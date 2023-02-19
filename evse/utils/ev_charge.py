@@ -129,7 +129,7 @@ class EvCharge():
         """ Return the percent of demand which still needs to be fulfilled. (float)
 
         Defined as the ratio of remaining demand and requested energy. """
-        return 100 - self.remaining_demand / self.requested_energy
+        return 100 - self.discharge - self.remaining_demand / self.requested_energy
 
     @property
     def cost(self):

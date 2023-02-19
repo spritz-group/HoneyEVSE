@@ -11,10 +11,26 @@ body {
 
 /*--- HOME SECTION  ---*/
 
-#data {
-    width: 50%;
+#home {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+#data {
+    grid-area: 1 / 1 / 3 / 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+#chart-container-charge {
+    grid-area: 1 / 2 / 2 / 3;
+}
+
+#chart-container-battery {
+    grid-area: 2 / 2 / 3 / 3;
 }
 
 h3,
@@ -31,7 +47,7 @@ p {
 
 #login,
 #singup,
-#home {
+#admin {
     height: 100vh;
     width: auto;
     display: flex;

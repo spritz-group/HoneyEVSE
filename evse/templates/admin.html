@@ -11,9 +11,13 @@
 </head>
 
 <body>
-    <div id="home">
+    <div id="admin">
         <div id="data">
-            <h3>Estimated Departure Time:</h3>
+            <h3>Vehicle ID: </h3>
+            <h3>
+                <p id="id">--</p>
+            </h3>
+            <h3>Estimated Departure Time</h3>
             <h3>
                 <p id="departure">--</p>
             </h3>
@@ -34,11 +38,8 @@
                 <p id="cost">--</p> &euro;
             </h3>
         </div>
-        <div id="chart-container-charge">
-            <canvas id="chart-charge"></canvas>
-        </div>
-        <div id="chart-container-battery">
-            <canvas id="chart-battery"></canvas>
+        <div id="chart-container">
+            <canvas id="chart"></canvas>
         </div>
     </div>
     <script>
@@ -47,7 +48,7 @@
             let dateTime = new Date().getTime();
             return new Date(dateTime + interval * 60000).toLocaleTimeString();
         }
-
+        
         function addData(chart, label, data) {
             chart.data.labels.push(label);
             chart.data.datasets.forEach((dataset) => {
@@ -56,26 +57,26 @@
             chart.update();
         }
 
-        function newChart(chartId, labelValue) {
+        function newChart() {
             config = {
                 type: "line",
                 data: {
                     labels: [0],
                     datasets: [
                         {
-                            label: labelValue,
+                            label: 'Current Charge',
                             data: [new Date().toLocaleTimeString()]
                         }
                     ]
                 }
             }
 
-            return new Chart(chartId, config);
+            return new Chart('chart', config);
         }
 
-        let chartCharge = newChart('chart-charge', 'Current Charge');
-        let chartBattery = newChart('chart-battery', 'Percent Charge');
+        let chart = newChart()
 
+        let id = document.getElementById("id");
         let departure = document.getElementById("departure");
         let current_charge = document.getElementById("current_charge");
         let energy_delivered = document.getElementById("energy_delivered");
@@ -89,24 +90,22 @@
                 .then(res => res.json())
                 .then(json => {
                     // Update values each second
+                    id.innerHTML = json.id
                     current_charge.innerHTML = json.current_charge.toFixed(2);
                     energy_delivered.innerHTML = json.energy_delivered.toFixed(2);
                     percent_complete.innerHTML = json.percent_complete.toFixed(2);
                     cost.innerHTML = json.cost.toFixed(2);
 
-                    // If the id is different, it means that there is a new eletric veichle
+                    // If the id is different, it means that there is a new eletric veicol
                     if (actualId == null || actualId != json.id) {
                         departure.innerHTML = calculateDeparture(json.arrival, json.departure);
-                        chartCharge.destroy();
-                        chartBattery.destroy();
-                        chartCharge = newChart('chart-charge', 'Current Charge');
-                        chartBattery = newChart('chart-battery', 'Percent Charge');
+                        chart.destroy();
+                        chart = newChart();
                         actualId = json.id;
                     }
                     // Initialize date for print timestamp
                     let date = new Date();
-                    addData(chartCharge, date.toLocaleTimeString(), json.current_charge);
-                    addData(chartBattery, date.toLocaleTimeString(), json.percent_complete);
+                    addData(chart, date.toLocaleTimeString(), json.current_charge);
 
                 })
         }, 1000);

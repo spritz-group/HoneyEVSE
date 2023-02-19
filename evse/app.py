@@ -53,6 +53,10 @@ def register():
         return redirect("/")
     return render_template("register.html", error = error)
 
+@app.route("/admin")
+def admin():
+    return render_template("admin.html")
+
 @app.route("/")
 def home():
     return render_template("home.html")
