@@ -3,7 +3,7 @@ This repository contains all the code realted to the implementation for HoneyEVS
 
 The project was develped for the course Advance Topics in Computer Networking Security of the Master Degree Computer Science at Univeristy of Padova.
 
-The complete paper to our project is availa at the file `Report.pdf`.
+The complete paper to our project is available at the file `Report.pdf`.
 
 ![image](https://user-images.githubusercontent.com/50354884/219980176-44dd4891-3a9e-47e6-b105-8884642a3ba4.png)
 
