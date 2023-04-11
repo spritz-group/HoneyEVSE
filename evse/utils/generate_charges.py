@@ -4,13 +4,15 @@ import os
 from datetime import datetime
 from pathlib import Path
 from random import randrange
+import numpy as np
 
 import pytz
 from acnportal import acnsim, algorithms
 from dateutil.relativedelta import relativedelta
 from dotenv import load_dotenv
 
-from utils.ev_charge import EvCharge
+# from utils.ev_charge import EvCharge
+from ev_charge import EvCharge
 
 load_dotenv()
 
@@ -46,6 +48,7 @@ def simulate(nsimulations=1, file_path=Path()):
         events = acnsim.acndata_events.generate_events(
             API_KEY, SITE, TIMEZONE.localize(start), TIMEZONE.localize(end), PERIOD, VOLTAGE, DEFAULT_BATTERY_POWER
         )
+
         sim = acnsim.Simulator(cn, SCH, events, TIMEZONE.localize(start), period=PERIOD)
         sim.run()
 
@@ -63,12 +66,25 @@ def simulate(nsimulations=1, file_path=Path()):
             start_charge, end_charge = list_indexes[0] - 1, list_indexes[-1] + 1
             # Generate a random value for the discharge percentage
             discharge_value = randrange(40, 80)
+
+
+            print(f'EV requested energy: {ev.requested_energy}')
+
+            ev._battery._init_charge = np.float(np.random.uniform(0, 1)) 
+
             ev_charge = EvCharge(id, start_charge, end_charge, ev.requested_energy, ev.station_id, discharge_value)
             # Iterate to each charges rate for each ev
             for charging_rate in df_charging_rates.loc[start_charge : end_charge, ev.station_id]:
                 # Set the current charge rate and save the internal parameter
                 ev_charge.set_current_charging_rate(charging_rate)
                 list_ev_charges.append(ev_charge.to_dict())
+
+
+            # ######### TESTING THE DEFAULT VALUES IN THE SIMULATOR ############
+            # print(f'Original battery initial charge value: {ev._battery._init_charge}')
+            # ev._battery._init_charge = np.float(np.random.uniform(0, 1)) 
+            # print(f'Modified values: {ev._battery._init_charge}')
+            # break
 
         # each simulation requires a new day
         start += relativedelta(days=1)
@@ -77,3 +93,5 @@ def simulate(nsimulations=1, file_path=Path()):
     # Save the snapshots of charges in a json file    
     with file_path.open("w") as fp: 
         json.dump(list_ev_charges, fp)
+
+# simulate(1, Path('test.json'))

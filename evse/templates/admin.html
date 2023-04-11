@@ -71,25 +71,38 @@
             return new Date(dateTime + interval * 60000).toLocaleTimeString();
         }
 
+        // get random color for chart
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
         /* The function add datas to the chart */
-        function addData(chart, label, data) {
+        function addData(chart, label, data, bg_color) {
             chart.data.labels.push(label);
             chart.data.datasets.forEach((dataset) => {
+                dataset.label.push(label)
                 dataset.data.push(data);
+                dataset.backgroundColor.push(bg_color);
             });
             chart.update();
         }
 
         /* Generate and return a new instance of the Chart in the canvas */
-        function newChart() {
+        function newChart(init_label, init_data, bg_color) {
             config = {
-                type: "line",
+                type: "pie",
                 data: {
-                    labels: [0],
+                    labels: [init_label],
                     datasets: [
                         {
-                            label: 'Current Charge',
-                            data: [new Date().toLocaleTimeString()]
+                            label: [],
+                            data: [init_data],
+                            backgroundColor: [bg_color]
                         }
                     ]
                 }
@@ -97,8 +110,8 @@
 
             return new Chart('chart', config);
         }
-
-        let chart = newChart()
+        
+        let chart = null;
 
         let id = document.getElementById("id");
         let arrival = document.getElementById("arrival")
@@ -108,7 +121,10 @@
         let percent_complete = document.getElementById("percent_complete");
         let cost = document.getElementById("cost");
 
-        let actualId = null;
+        let actualId = document.getElementById("id");
+        
+        // counter if it is first time retrieving data
+        let c = 0;
 
         setInterval(() => {
             fetch('./status')
@@ -121,17 +137,27 @@
                     percent_complete.innerHTML = json.percent_complete.toFixed(2);
                     cost.innerHTML = json.cost.toFixed(2);
 
-                    // If the id is different, it means that there is a new eletric veicol
-                    if (actualId == null || actualId != json.id) {
+                    // If the id is different, it means that there is a new eletric vehicle
+                    if (actualId != json.id) {
                         arrival.innerHTML = new Date().toLocaleTimeString();
                         departure.innerHTML = calculateDeparture(json.arrival, json.departure);
-                        chart.destroy();
-                        chart = newChart();
+
+                        // create chart with first data available
+                        if (c == 0) {
+                            chart = newChart(json.id, json.energy_delivered, getRandomColor());
+                            c = 1
+                        }
+                        else {
+                            console.log(json)
+                            addData(chart, json.id,json.energy_delivered, getRandomColor());
+                        }
+
                         actualId = json.id;
+                        console.log(json)
                     }
                     // Initialize date for print timestamp
                     let date = new Date();
-                    addData(chart, date.toLocaleTimeString(), json.current_charge);
+                   
                 })
         }, 1000);
     </script>

@@ -60,9 +60,15 @@ def admin():
     return render_template("admin.html")
 
 # Route for the user web interface
-@app.route("/")
+@app.route("/home")
 def home():
     return render_template("home.html")
+
+# Route for the info table
+@app.route("/")
+def info():
+    return render_template("info.html")
+
 
 if __name__ == "__main__":
     app.run()

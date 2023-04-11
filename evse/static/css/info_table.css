@@ -1,0 +1,35 @@
+body {
+    height: 100vh;
+    background: rgb(0, 146, 121);
+    background: linear-gradient(45deg, rgba(0, 146, 121, 1) 30%, rgba(13, 81, 90, 1) 100%);
+}
+
+table {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 150px;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+td {
+    padding-left:10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+td.table-color-1 {
+    font-weight: bold;
+    background-color: #a6a6a6;
+  }
+
+td.table-color-2 {
+background-color: #d9d9d9;
+}
+
+td.table-color-3 {
+background-color: white;
+}

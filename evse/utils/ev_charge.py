@@ -17,6 +17,7 @@ class EvCharge():
         departure,
         requested_energy,
         station_id,
+        #init_battery_charge,
         discharge,
         estimated_departure=None,
     ):
@@ -25,6 +26,7 @@ class EvCharge():
         self._arrival = arrival
         self._departure = departure
         self._station_id = station_id
+        #self._init_battery_charge = init_battery_charge
         self._discharge = discharge
 
         # Estimate of session parameters
@@ -42,6 +44,7 @@ class EvCharge():
         "Departure: " + str(self.departure) + "\n" +\
         "Requested Energy: " + str(self.requested_energy) + "\n" +\
         "Station ID: " + str(self.station_id) + "\n" +\
+        #"Initial Battery Charge: " + str(self.init_battery_charge) + "\n" +\
         "Estimated Departure: " + str(self.estimated_departure) + "\n" +\
         "Energy Delivered: " + str(self.energy_delivered) + "\n" +\
         "Charging Rate: " + str(self.current_charging_rate) + "\n"
@@ -90,6 +93,11 @@ class EvCharge():
     def station_id(self):
         """ Return the unique identifier for the EVSE used for this charging session. """
         return self._station_id
+
+    # @property
+    # def init_battery_charge(self):
+    #     """ Return initial battery state of the EV """
+    #     return self._init_battery_charge
 
     @property
     def discharge(self):
@@ -145,6 +153,7 @@ class EvCharge():
             "arrival": self.arrival,
             "departure": self.departure,
             "current_charge": self.current_charging_rate,
+            #"init_battery_charge": self.init_battery_charge,
             "energy_delivered": self.energy_delivered,
             "percent_complete": self.percent_complete,
             "cost": self.cost
@@ -157,6 +166,7 @@ class EvCharge():
             "arrival": self.arrival,
             "departure": self.departure,
             "current_charge": self.current_charging_rate,
+            #"init_battery_charge": self.init_battery_charge,
             "energy_delivered": self.energy_delivered,
             "percent_complete": self.percent_complete,
             "cost": self.cost

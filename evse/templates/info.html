@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EVSE - SPECIFICATIONS</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/info_table.css') }}">
+    </head>
+
+    <body>
+        <table>
+            <tr>
+                <td class="table-color-1" rowspan="4">Power Input</td>
+                <td class="table-color-2">Input Rating</td>
+                <td class="table-color-3">208-240Vac, signle phase, 20 A or 40 A maximum, 60 Hz</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Number of Phase / Wire</td>
+                <td class="table-color-3">L1, L2 and ground, hardwired with terminal block or cord-and-plug</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Stanby Power</td>
+                <td class="table-color-3">&#60; 5 W</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Metering</td>
+                <td class="table-color-3">Embedded meter circuit component with 1% (after calibration) accuracy at nominal </br> input, rated output current to measure voltage, current, frequency, power, energy at </br> input for internal reference</td>
+            </tr>
+
+
+            <!-- Power out info -->
+            <tr>
+                <td class="table-color-1" rowspan="3">Power Output</td>
+                <td class="table-color-2">Output Rating</td> 
+                <td class="table-color-3">208-240Vac, single phase, 30 A or 40 A maximum, 60Hz </br> 7.2 kW or 9.y kW maximum</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Charging Interface</td>
+                <td class="table-color-3">SAE J1772 charging plug, 18 or 25 ft. cable</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Cold-Load Pickup</td>
+                <td class="table-color-3">Randomized delay before charge resumes after power failure</td>
+            </tr>
+
+            <!-- protection -->
+            <tr>
+                <td  class="table-color-1"rowspan="2">Protection</td>
+                <td class="table-color-2">Upstream</td>
+                <td class="table-color-3">2-pole 40 A or 50 A breaker on dedicated circuit, non-GFCI type</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Electric Protection</td>
+                <td class="table-color-3">Over current, Under voltage, Over voltage, Residual current, Surge protection, </br> Short circuit, Over temperature, Ground fault</td>
+            </tr>
+
+            <!-- UI  -->
+            <tr>
+                <td class="table-color-1" rowspan="3">User Interface & Control</td>
+                <td class="table-color-2">Status indicators</td>
+                <td class="table-color-3">Power (AC Present), Charging, Fault</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Charger Configuration</td>
+                <td class="table-color-3">Charging current limitation</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Card Reader</td>
+                <td class="table-color-3">ISO/IEC 14443 compliant RFID card reader</td>
+            </tr>
+
+            <!-- Communications -->
+            <tr>
+                <td class="table-color-1" rowspan="2">Communication</td>
+                <td class="table-color-2">Network Interface</td>
+                <td class="table-color-3">WLAN (optional)</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Charging Protocol</td>
+                <td class="table-color-3">OCPP</td>
+            </tr>
+
+            <!-- Environment -->
+            <tr>
+                <td class="table-color-1" rowspan="4">Environmental</td>
+                <td class="table-color-2">Operating Temperature</td>
+                <td class="table-color-3">-22&#8451;F ~ +122&#8451;F (-30&#8451;C ~ +50&#8451;C)</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Storage  Temperature</td>
+                <td class="table-color-3">-40&#8451;F ~ +176&#8451;F (-40&#8451;C ~ +80&#8451;C)</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Humidity</td>
+                <td class="table-color-3">&#60; 95% relative humidity, non-condensing</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Altitude</td>
+                <td class="table-color-3">Up to 6500 ft. (2000 m)</td>
+            </tr>
+
+            <!-- Mech -->
+            <tr>
+                <td class="table-color-1" rowspan="4">Mechanical</td>
+                <td class="table-color-2">Ingress Protection</td>
+                <td class="table-color-3">Type 3R</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Enclosure  Protection</td>
+                <td class="table-color-3">IK08 according to IEC 62262</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Cooling</td>
+                <td class="table-color-3">Natural cooling</td>
+            </tr>
+            <tr>
+                <td class="table-color-2">Dimension (W x H x D) / Weight</td>
+                <td class="table-color-3">12.6 x 10.3 x 4.5 in. (260 x 320 x 115 mm) </br> 5 lbs (2 kg), excluding charging plug and cable</td>
+            </tr>
+
+            <tr>
+                <td class="table-color-1">Regulation</td>
+                <td class="table-color-2">Certificate / Compliance</td>
+                <td class="table-color-3">UL, cUL, UL 2594, UL 2231, UL 1998, UL 991, NEC Article 625</td>
+            </tr>
+        </table> 
+    </body>
+</html>

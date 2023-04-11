@@ -31,7 +31,9 @@ make
 sudo make install
 
 # Install packages for python
-pip install -r requirements.txt
+#cd ~
+#cd HoneyEVSE
+#pip install -r requirements.txt#
 
 # create log and make it modifiable
 touch honeyd.log
