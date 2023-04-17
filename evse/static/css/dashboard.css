@@ -1,0 +1,12 @@
+.buttons {
+    margin-top: 100px;
+}
+
+.btn {
+    border-radius: 5%;
+    background-color: #a6a6a6;
+    padding: 14px 28px;
+    margin-right: 40px;
+    font-size: 25px;
+    display: inline-block;
+  } 

@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EVSE</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
 </head>
 
 <body>
@@ -55,8 +56,32 @@
                 </div>
             </nav>
         </div>
+
+        <div class="buttons">
+            <input type="button" value="Stop" class="btn" onclick="stop_charge()">
+            <input type="button" value="Pause" class="btn" onclick="pause_charge()">
+            <input type="button" value="Resume" class="btn" onclick="resume_charge()">
+        </div>
+
     </div>
     <script>
+
+        var charging_status = "resume"
+
+        /* charging actions */
+        function stop_charge() {
+            // Update values each second
+            charging_status = "stop";
+        }
+
+        function pause_charge() {
+            charging_status = "pause";
+        }
+
+        function resume_charge() {
+            charging_status = "resume";
+        }   
+
         /* Simple function to calculate the minutes from a instant of time to another one*/
         function calculateDeparture(arrival, departure) {
             let interval = departure - arrival;
@@ -74,23 +99,38 @@
         let actualId = null;
 
         setInterval(() => {
-            fetch('./status')
-                .then(res => res.json())
-                .then(json => {
-                    // Update values each second
-                    status.innerHTML = json.current_charge == 0 ? "Disconnect" : "On Charge";
-                    current_charge.innerHTML = json.current_charge.toFixed(2);
-                    energy_delivered.innerHTML = json.energy_delivered.toFixed(2);
-                    percent_complete.innerHTML = json.percent_complete.toFixed(2);
-                    cost.innerHTML = json.cost.toFixed(2);
+        
+            if (charging_status == "stop") {
+                // zeroed values
+                status.innerHTML = "Disconnect";
+                current_charge.innerHTML = 0;
+                energy_delivered.innerHTML = 0; 
+                percent_complete.innerHTML = 0; 
+                cost.innerHTML = 0;
+            }
+            else if (charging_status == "pause") {
+                // don't update values
 
-                    // If the id is different, it means that there is a new eletric veichle
-                    if (actualId == null || actualId != json.id) {
-                        departure.innerHTML = calculateDeparture(json.arrival, json.departure);
-                        status.innerHTML = "Connect"
-                        actualId = json.id;
-                    }
-                })
+            }
+            else if (charging_status == "resume") {
+                fetch('./status')
+                    .then(res => res.json())
+                    .then(json => {
+                        // Update values each second
+                        status.innerHTML = json.current_charge == 0 ? "Disconnect" : "On Charge";
+                        current_charge.innerHTML = json.current_charge.toFixed(2);
+                        energy_delivered.innerHTML = json.energy_delivered.toFixed(2);
+                        percent_complete.innerHTML = json.percent_complete.toFixed(2);
+                        cost.innerHTML = json.cost.toFixed(2);
+
+                        // If the id is different, it means that there is a new eletric veichle
+                        if (actualId == null || actualId != json.id) {
+                            departure.innerHTML = calculateDeparture(json.arrival, json.departure);
+                            status.innerHTML = "Connect"
+                            actualId = json.id;
+                        }
+                    })
+            }
         }, 1000);
     </script>
 </body>
