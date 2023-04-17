@@ -6,8 +6,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <scritp src="{{ url_for('static', filename='js/timeme.min.js') }}"></scritp>
     <title>EVSE - HMI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/timeme.js') }}"></script>
+        <script type="text/javascript">
+            TimeMe.initialize({
+                currentPageName: "/admin",
+                idleTimeoutInSeconds: 20
+            });
+        </script>
+        <script type="text/javascript">
+
+            window.addEventListener('beforeunload', (event) => {
+
+                // event.preventDefault();
+
+                // get the request in the logs
+                var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+                var thisPage = "/admin"
+                xmlhttp=new XMLHttpRequest();
+                xmlhttp.open("POST","/admin",false);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("timeOnPage=" + timeSpentOnPage + "&page=" + thisPage);
+
+                // Google Chrome requires returnValue to be set.
+                // event.returnValue = '';
+            });
+        </script>
 </head>
 
 <body>
@@ -59,7 +86,7 @@
                 </h3>
             </div>
 
-            <p>For more actions <a href="/login">login</a> to the admin console</p>
+            <p>For more actions <a href="/login">login</a> to the admin</p>
         </div>
         <div id="chart-container">
             <canvas id="chart"></canvas>

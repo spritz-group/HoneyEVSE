@@ -32,11 +32,17 @@ def status():
 def login():
     error = None
     if request.method == 'POST':
-        app.logger.info('Trying to login with email: %s and password: %s from %s',
-                        request.form['email'],
-                        request.form['password'],
-                        request.remote_addr)
-        error = 'Invalid Credentials. Please try again.'
+        if "page" in request.form:
+            app.logger.info('Time spent on the page %s from %s: %s' ,
+                        request.form['page'],
+                        request.remote_addr,
+                        request.form['timeOnPage'])
+        else:
+            app.logger.info('Trying to login with email: %s and password: %s from %s',
+                            request.form['email'],
+                            request.form['password'],
+                            request.remote_addr)
+            error = 'Invalid Credentials. Please try again.'
     return render_template('login.html', error=error)
 
 # Route that handles the signup page logic
@@ -44,29 +50,55 @@ def login():
 def register():
     error = None
     if request.method == 'POST':
-        app.logger.info('Trying to register with name: %s, surname: %s, email: %s, password: %s, confirm_password: %s from %s',
-        request.form['name'],
-        request.form['surname'],
-        request.form['email'],
-        request.form['password'],
-        request.form['confirm_password'],
-        request.remote_addr)
-        return redirect("/")
+        if "page" in request.form:
+            app.logger.info('Time spent on the page %s from %s: %s' ,
+                        request.form['page'],
+                        request.remote_addr,
+                        request.form['timeOnPage'])
+        else:
+            app.logger.info('Trying to register with name: %s, surname: %s, email: %s, password: %s, confirm_password: %s from %s',
+            request.form['name'],
+            request.form['surname'],
+            request.form['email'],
+            request.form['password'],
+            request.form['confirm_password'],
+            request.remote_addr)
+            return redirect("/")
     return render_template("register.html", error = error)
 
 # Route for the HMI
-@app.route("/admin")
+@app.route("/admin", methods=['GET', 'POST'])
 def admin():
+    if request.method == 'POST':
+        app.logger.info('Time spent on the page %s from %s: %s' ,
+                        request.form['page'],
+                        request.remote_addr,
+                        request.form['timeOnPage'])
     return render_template("admin.html")
 
 # Route for the user web interface
-@app.route("/home")
-def home():
-    return render_template("home.html")
+@app.route("/dashboard", methods=['GET', 'POST'])
+def dashboard():
+    if request.method == 'POST':
+        if "page" in request.form:
+            app.logger.info('Time spent on the page %s from %s: %s' ,
+                            request.form['page'],
+                            request.remote_addr,
+                            request.form['timeOnPage'])
+        if "action" in request.form:
+            app.logger.info('%s by host %s' ,
+                            request.form['action'],
+                            request.remote_addr)
+    return render_template("dashboard.html")
 
-# Route for the info table
-@app.route("/")
+# Route for the info table"/dashboard",
+@app.route("/", methods=['GET', 'POST'])
 def info():
+    if request.method == 'POST':
+        app.logger.info('Time spent on the page %s from %s: %s' ,
+                        request.form['page'],
+                        request.remote_addr,
+                        request.form['timeOnPage'])
     return render_template("info.html")
 
 

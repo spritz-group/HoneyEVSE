@@ -3,7 +3,34 @@
 <head>
   <title>EVSE - Sign Up</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <scritp src="{{ url_for('static', filename='js/timeme.js') }}"></scritp>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+  <script type="text/javascript" src="{{ url_for('static', filename='js/timeme.js') }}"></script>
+        <script type="text/javascript">
+            TimeMe.initialize({
+                currentPageName: "/register",
+                idleTimeoutInSeconds: 20
+            });
+        </script>
+        <script type="text/javascript">
+
+            window.addEventListener('beforeunload', (event) => {
+
+                // event.preventDefault();
+
+                // get the request in the logs
+                var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+                var thisPage = "/"
+                xmlhttp=new XMLHttpRequest();
+                xmlhttp.open("POST","/",false);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("timeOnPage=" + timeSpentOnPage + "&page=" + thisPage);
+
+                // Google Chrome requires returnValue to be set.
+                // event.returnValue = '';
+            });
+        </script>
 </head>
 
 <body>

@@ -5,9 +5,36 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVSE</title>
+    <title>EVSE - DASHBOARD</title>
+    <scritp src="{{ url_for('static', filename='js/timeme.js') }}"></scritp>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/timeme.js') }}"></script>
+        <script type="text/javascript">
+            TimeMe.initialize({
+                currentPageName: "/dashboard",
+                idleTimeoutInSeconds: 20
+            });
+        </script>
+        <script type="text/javascript">
+
+            window.addEventListener('beforeunload', (event) => {
+
+                // event.preventDefault();
+
+                // get the request in the logs
+                var timeSpentOnPage = TimeMe.getTimeOnCurrentPageInSeconds();
+                var thisPage = "/dashboard"
+                xmlhttp=new XMLHttpRequest();
+                xmlhttp.open("POST","/dashboard",false);
+                xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xmlhttp.send("timeOnPage=" + timeSpentOnPage + "&page=" + thisPage);
+
+                // Google Chrome requires returnValue to be set.
+                // event.returnValue = '';
+            });
+        </script>
 </head>
 
 <body>
@@ -58,9 +85,9 @@
         </div>
 
         <div class="buttons">
-            <input type="button" value="Stop" class="btn" onclick="stop_charge()">
-            <input type="button" value="Pause" class="btn" onclick="pause_charge()">
-            <input type="button" value="Resume" class="btn" onclick="resume_charge()">
+            <input type="button" name="stopbtn" value="Stop" class="btn" onclick="stop_charge()">
+            <input type="button" name="pausebtn" value="Pause" class="btn" onclick="pause_charge()">
+            <input type="button" name="resumebtn" value="Resume" class="btn" onclick="resume_charge()">
         </div>
 
     </div>
@@ -72,14 +99,29 @@
         function stop_charge() {
             // Update values each second
             charging_status = "stop";
+
+            xmlhttp=new XMLHttpRequest();
+            xmlhttp.open("POST","/dashboard",false);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("action=Stop%20Button%20Pressed");
         }
 
         function pause_charge() {
             charging_status = "pause";
+
+            xmlhttp=new XMLHttpRequest();
+            xmlhttp.open("POST","/dashboard",false);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("action=Pause%20Button%20Pressed");
         }
 
         function resume_charge() {
             charging_status = "resume";
+
+            xmlhttp=new XMLHttpRequest();
+            xmlhttp.open("POST","/dashboard",false);
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xmlhttp.send("action=Resume%20Button%20Pressed");
         }   
 
         /* Simple function to calculate the minutes from a instant of time to another one*/

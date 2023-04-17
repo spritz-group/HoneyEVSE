@@ -15,6 +15,8 @@ The complete paper to our project is available at the file `Report.pdf`.
   
 - Python 3 for the HMI web app (installation included in the preconfigured script).
 
+- TimeMe.js library (https://github.com/jasonzissman/TimeMe.js/)
+
 ## Installation
 
 In order to install the noeyport, clone this repo using the command:
