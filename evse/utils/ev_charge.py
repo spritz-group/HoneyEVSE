@@ -44,7 +44,6 @@ class EvCharge():
         "Departure: " + str(self.departure) + "\n" +\
         "Requested Energy: " + str(self.requested_energy) + "\n" +\
         "Station ID: " + str(self.station_id) + "\n" +\
-        #"Initial Battery Charge: " + str(self.init_battery_charge) + "\n" +\
         "Estimated Departure: " + str(self.estimated_departure) + "\n" +\
         "Energy Delivered: " + str(self.energy_delivered) + "\n" +\
         "Charging Rate: " + str(self.current_charging_rate) + "\n"

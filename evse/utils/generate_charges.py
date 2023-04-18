@@ -12,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 from dotenv import load_dotenv
 
 # from utils.ev_charge import EvCharge
-from ev_charge import EvCharge
+from utils.ev_charge import EvCharge
 
 load_dotenv()
 
