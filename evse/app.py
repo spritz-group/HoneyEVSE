@@ -2,6 +2,8 @@ import json
 import logging
 from flask import Flask, redirect, render_template, request
 
+from gevent.pywsgi import WSGIServer
+
 logging.basicConfig(filename='record.log', level=logging.INFO, format='%(asctime)s %(levelname)s %(name)s : %(message)s')
 
 def generator_json(file_path=""):
@@ -103,4 +105,7 @@ def info():
 
 
 if __name__ == "__main__":
-    app.run()
+    # app.run()
+    http_server = WSGIServer(("185.213.114.30", 80), app)
+    http_server.serve_forever()
+
