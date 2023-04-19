@@ -105,7 +105,6 @@ def info():
 
 
 if __name__ == "__main__":
-    # app.run()
-    http_server = WSGIServer(("185.213.114.30", 80), app)
+    # app.run(debug=True, port=8000)
+    http_server = WSGIServer(("127.0.0.1", 8080), app)
     http_server.serve_forever()
-
