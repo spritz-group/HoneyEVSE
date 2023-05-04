@@ -49,9 +49,3 @@ To check the correct functioning of HoneyEVSE, you can scan the IP from outside 
 To do this, first install Nmap: `sudo apt install nmap`.
 
 You can use the file with `scanners.sh`. You can launch it all together or just manually pick and run them.
-
-## Authors
-Massimiliano Baldo (__[massimiliano.baldo@studenti.unipd.it](mailto:massimiliano.baldo@studenti.unipd.it)__)  
-Alessio Trevisan (__[alessio.trevisan.2@studenti.unipd.it](mailto:alessio.trevisan.2@studenti.unipd.it)__)  
-Federico Turrin (__[turrin@math.unipd.it](mailto:turrin@math.unipd.it)__)  
-Tommaso Bianchi (__[tommaso.bianchi@phd.unipd.it](mailto:tommaso.bianchi@phd.unipd.it)__)  
