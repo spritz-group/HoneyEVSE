@@ -15,9 +15,9 @@ This repository contains all the code realted to the implementation for HoneyEVS
 
 ## Installation
 
-In order to install the noeyport, clone this repo using the command:
+In order to install the hoenyport, clone this repo using the command:
 
-`git clone https://github.com/massimilianobaldo/HoneyEVSE`
+`git clone https://github.com/bianchitom/HoneyEVSE`
 
 Once done that, there is a helper script `install.sh` that will install all the packages needed.
 
