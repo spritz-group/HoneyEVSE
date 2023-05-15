@@ -9,6 +9,8 @@ import pandas as pd
 import argparse
 import os 
 import json
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 argParser = argparse.ArgumentParser()
 argParser.add_argument("-f", "--file", help="path of log file to parse")
@@ -18,8 +20,12 @@ args = argParser.parse_args()
 filename = args.file
 
 # check if the file exists, otherwise exit the program
-if not os.path.isfile(filename):
-    print(f'[!] FILE \"{filename}\" NOT FOUND!')
+try:
+    if not os.path.isfile(filename):
+        print(f'[!] FILE \"{filename}\" NOT FOUND!')
+        exit()
+except:
+    print("File not provided! Call -h for help")
     exit()
 
 # PARSER METHODS
@@ -47,7 +53,7 @@ def request_parser(log):
     ip = log[5]
     date = log[8][1:]
     hour = log[9][:-1]
-    request_type = log[10]
+    request_type = log[10][1:]
     page = log[11]
     request_action = log[12]
     request_code = log[13]
@@ -106,8 +112,8 @@ with open(filename, 'r') as f:
                 time_counters[page][1] += 1 # counter for the specific page action 
             
             # update ip list
-            if time_parse[3] not in ip_list:
-                ip_list.append(time_parse[3])
+            #if time_parse[3] not in ip_list:
+            ip_list.append(time_parse[3].replace(":", ""))
             
         elif log == "Request":
             request_parse = request_parser(log_line)
@@ -121,8 +127,8 @@ with open(filename, 'r') as f:
             else:
                 request_counters[request_type] += 1
 
-            if request_parse[0] not in ip_list:
-                ip_list.append(request_parse[0])
+            #if request_parse[0] not in ip_list:
+            ip_list.append(request_parse[0].replace(":", ""))
             
         elif log == "Action":
             action_parse = action_parser(log_line)
@@ -136,8 +142,8 @@ with open(filename, 'r') as f:
             else:
                 action_counters[button] += 1
 
-            if action_parse[3] not in ip_list:
-                ip_list.append(action_parse[3])
+            #if action_parse[3] not in ip_list:
+            ip_list.append(action_parse[3].replace(":", ""))
 
     
     time_df = pd.DataFrame(nested_dict_to_list(time_counters), columns=["page", "time", "counter"])
@@ -165,3 +171,48 @@ with open(filename, 'r') as f:
     print("For for each button:")
     for button in action_df['action']:
         print("\tButton pressed", button, ":", int(action_df.loc[action_df['action'] == button]['counter']), ", in percentage:", 100*int(action_df.loc[action_df['action'] == button]['counter'])/action_df['counter'].sum())
+
+
+# save unique ip address in file
+with open('repeated-ips-greynoise.txt', mode='wt', encoding='utf-8') as myfile:
+    for ip in ip_list:
+        myfile.write(f'\n{ip}')
+
+# compute IP statistic from here
+unique_ip_list = list(set(ip_list))
+
+with open('unique-ips.txt', mode='wt', encoding='utf-8') as myfile:
+    for ip in unique_ip_list:
+        myfile.write(f'\n{ip}')
+
+time_tot = time_df['time'].sum()
+request_tot = request_df['counter'].sum()
+action_tot = action_df['counter'].sum()
+
+# PLOTS
+# Apply the default theme
+
+sns.set_theme()
+# sns.set(rc = {'figure.figsize':(18,18)})
+# plt.figure(figsize=(12,12))
+
+# plt.rcParams['font.family'] = 'serif'
+# plt.rcParams['font.serif'] = ['Times New Roman'] + plt.rcParams['font.serif']
+
+time_plot = sns.barplot(data=time_df, x="page", y="time")
+time_plot.set(xlabel='Page', ylabel='Time Spent (s)')
+# time_plot.set_ylabel("Time Spent (s)", fontsize=20)
+# time_plot.tick_params(labelsize=18, rotation=0)
+plt.savefig('time_results_http.pdf', bbox_inches='tight')
+# plt.show()
+
+request_plot = sns.barplot(data=request_df,x="request", y="counter")
+time_plot.set(xlabel='Request Type', ylabel='Number of Requests')
+# request_plot.set_xlabel("Request Type", fontsize=20)
+# request_plot.set_ylabel("Number of Requests", fontsize=20)
+# request_plot.tick_params(labelsize=18, rotation=0)
+plt.savefig('request_results_http.pdf', bbox_inches='tight')
+# # plt.show()
+
+
+
